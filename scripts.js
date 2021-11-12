@@ -14,6 +14,7 @@ window.addEventListener("load", function(){
     let yPos = 0;
     let xPos = 0;
 
+    let takeOffComplete = false;
     const takeoffButton = document.getElementById("takeoff");
     const flightStatus = document.getElementById("flightStatus");
     const shuttleBackground = document.getElementById("shuttleBackground");
@@ -28,6 +29,7 @@ window.addEventListener("load", function(){
             yPos = 10;
             spaceShuttleHeight.innerHTML = 10000;
             rocket.style.bottom = `${yPos}px`;
+            takeOffComplete = true;
         }
 
     });
@@ -43,6 +45,7 @@ window.addEventListener("load", function(){
         spaceShuttleHeight.innerHTML = 0;
         rocket.style.bottom = `${yPos}px`;
         rocket.style.left = `0px`;
+        takeOffComplete = false;
     })
 
     //step 4 
@@ -57,40 +60,49 @@ window.addEventListener("load", function(){
             spaceShuttleHeight.innerHTML = 0;
             rocket.style.bottom = `${yPos}px`;
             rocket.style.left = `0px`;
+            takeOffComplete = false;
        }
     });
 
     //step 5
     upButton.addEventListener("click", function(){
-        if (yPos < shuttleBackground.clientHeight - 60) {
-            yPos += 10;
-            spaceShuttleHeight.innerHTML = yPos * 1000;
-            rocket.style.bottom = `${yPos}px`;
+        if (takeOffComplete) {
+            if (yPos < shuttleBackground.clientHeight - 60) {
+                yPos += 10;
+                spaceShuttleHeight.innerHTML = yPos * 1000;
+                rocket.style.bottom = `${yPos}px`;
+            }
         }
     });
     downButton.addEventListener("click", function(){
-        if (yPos > 0) {
-            yPos += -10;
-            spaceShuttleHeight.innerHTML = yPos * 1000;
-            rocket.style.bottom = `${yPos}px`;
-        }
-    });
-    rightButton.addEventListener("click", function(){
-        if (xPos >= -10) {
-            xPos += -10;
-            rocket.style.left = `${xPos}px`;
-            console.log(rocket.style.left);
+        if (takeOffComplete) {
+            if (yPos > 0) {
+                yPos += -10;
+                spaceShuttleHeight.innerHTML = yPos * 1000;
+                rocket.style.bottom = `${yPos}px`;
+            }
         }
     });
     leftButton.addEventListener("click", function(){
-        console.log(shuttleBackground.clientWidth)
-        if (xPos < shuttleBackground.clientWidth - 55) {
-            xPos += 10;
-            rocket.style.left = `${xPos}px`;
+        if (takeOffComplete) {
+            if (xPos >= -10) {
+                xPos += -10;
+                rocket.style.left = `${xPos}px`;
+                console.log(rocket.style.left);
+            }
         }
-        if (xPos > shuttleBackground.clientWidth - 55) {
-            xPos = shuttleBackground.clientWidth - 55;
-            rocket.style.left = `${xPos}px`;
+    });
+    rightButton.addEventListener("click", function(){
+        if (takeOffComplete) {
+            console.log(shuttleBackground.clientWidth)
+            if (xPos < shuttleBackground.clientWidth - 55) {
+                xPos += 10;
+                rocket.style.left = `${xPos}px`;
+            }
+            if (xPos > shuttleBackground.clientWidth - 55) {
+                xPos = shuttleBackground.clientWidth - 55;
+                rocket.style.left = `${xPos}px`;
+            }
         }
         
     });
